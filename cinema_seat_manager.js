@@ -26,21 +26,25 @@ function imprimirAsientos(matriz) {
   }
 }
 
-function visualizar(valor){
-    if (valor===0){
-        valor = "L";
+function visualizarSala(matriz) {
+    let verSala = [];
+    for (let ele in matriz) {
+        for (let asiento = 0; asiento < asientosPorFila; asiento++){
+            const filaTemp=[];
+            if (matriz[ele][asiento] === 0){
+                filaTemp.push("L");
+            }
+            else {
+                filaTemp.push("X");
+            }
+            verSala.push(filaTemp);
+        }
     }
-    else {
-        valor = "X";
-    }
+    return verSala;
 }
-
-let verSala = asientosCine.map( function(valor){
-    
-});
-
-console.log(verSala);
 
 asignarAsientos(3, 4);
 
-imprimirAsientos(asientosCine);
+imprimirAsientos(visualizarSala(asientosCine));
+
+// console.log(visualizarSala(asientosCine));
