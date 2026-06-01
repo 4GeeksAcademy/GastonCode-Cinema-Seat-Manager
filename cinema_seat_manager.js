@@ -26,19 +26,19 @@ function imprimirAsientos(matriz) {
   }
 }
 
+
 function visualizarSala(matriz) {
-    let verSala = [];
-    for (let ele in matriz) {
-        for (let asiento = 0; asiento < asientosPorFila; asiento++){
-            const filaTemp=[];
+    const verSala = [];
+    for (let ele = 0; ele < matriz.length ; ele++) {
+        const filaTemp=[];
+        for (let asiento = 0; asiento < matriz[ele].length; asiento++){
             if (matriz[ele][asiento] === 0){
                 filaTemp.push("L");
             }
             else {
                 filaTemp.push("X");
-            }
-            verSala.push(filaTemp);
-        }
+            }}
+        verSala.push(filaTemp);
     }
     return verSala;
 }
