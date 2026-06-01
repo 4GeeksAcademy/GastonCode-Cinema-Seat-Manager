@@ -1,3 +1,5 @@
+// Inicialización del esquema general.
+
 let asientosCine = [];
 const filas = 8;
 const asientosPorFila = 10;
@@ -10,9 +12,19 @@ for (let i = 0; i < filas; i++) {
     asientosCine.push(fila);
 }
 
+// Función de asignación de asiento indicando fila y columna. 
+
 function asignarAsientos(fila, columna) {
-   asientosCine[fila-1][columna-1]=1;
+    if (asientosCine[fila-1][columna-1] === 0) {
+        asientosCine[fila-1][columna-1]=1;
+        console.log(`Asiento reservado con éxito.`)
+    }
+    else {
+        console.log(`El asiento seleccionado (fila ${fila}, columna ${columna}) ya está ocupado.`)
+    }
 }
+
+// Función de impresión en pantalla de la matriz de asientos.
 
 function imprimirAsientos(matriz) {
   console.log("Mapa de Asientos del Cine:");
@@ -26,6 +38,7 @@ function imprimirAsientos(matriz) {
   }
 }
 
+// Función de conversión de la matriz de datos al formato de visualización (L = libre, X = ocupado).
 
 function visualizarSala(matriz) {
     const verSala = [];
@@ -43,8 +56,42 @@ function visualizarSala(matriz) {
     return verSala;
 }
 
-asignarAsientos(3, 4);
+// Función de cálculo de asientos vacíos y asientos ocupados.
+
+function estadoSala(matriz) {
+    let suma_libres = 0;
+    let suma_ocupados = 0;
+    for (let fila in matriz) {
+        let suma_temp = 0;
+        for (let caso = 0; caso < matriz[fila].length; caso++){
+            if (matriz[fila][caso] === 0){
+                suma_libres++;
+            }
+            else {
+                suma_ocupados++;
+            }
+        }
+    }
+    console.log(`Hay un total de ${suma_libres} asientos libres y ${suma_ocupados} asientos ocupados.`);
+}
+
+// Función de búsqueda de dupla de asientos vacíos.
+
+function buscarDupla (matriz) {
+    for (let fila in matriz) {
+        for (let i = 0; i < matriz[fila].length; i++){
+            if (matriz[fila][i] === 0 && matriz[fila][i+1] === 0){
+                console.log(`Están disponibles los asientos contiguos ${i+1} y ${i+2} de la fila ${parseInt(fila)+1}.`);
+                return;
+            } 
+        }  
+    }
+    console.log(`No hay asientos contiguos disponibles.`);
+    return;
+}
+
+// Visualización de resultados de funciones. 
 
 imprimirAsientos(visualizarSala(asientosCine));
-
-// console.log(visualizarSala(asientosCine));
+estadoSala(asientosCine);
+buscarDupla(asientosCine);
