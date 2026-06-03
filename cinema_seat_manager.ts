@@ -1,35 +1,42 @@
 // Inicialización del esquema general.
+type Asiento = 0 | 1 | "L" | "X";
+type Sala = Asiento[][];
 
-let asientosCine: number = [];
-const filas = 8;
-const asientosPorFila = 10;
+let salaCine : Sala= [];
+const filas : number = 8;
+const asientosPorFila : number = 10;
 
 for (let i = 0; i < filas; i++) {
-    const fila=[];
+    const fila : Asiento[] = [];
     for (let j = 0; j < asientosPorFila; j++) {
         fila.push(0);
     }
-    asientosCine.push(fila);
+    salaCine.push(fila);
 }
 
 // Función de asignación de asiento indicando fila y columna. 
 
-function asignarAsientos(fila, columna) {
-    if (asientosCine[fila-1][columna-1] === 0) {
-        asientosCine[fila-1][columna-1]=1;
-        console.log(`Asiento reservado con éxito.`)
+function asignarAsientos(fila : number, columna : number) {
+    if (typeof fila === "number" && typeof columna === "number" && fila > 0 && fila <= filas && columna > 0 && columna <= asientosPorFila) {
+        if (salaCine[fila-1][columna-1] === 0) {
+            salaCine[fila-1][columna-1] = 1;
+            console.log(`Asiento reservado con éxito.`)
+        }
+        else {
+            console.log(`El asiento seleccionado (fila ${fila}, columna ${columna}) ya está ocupado.`)
+        }
     }
     else {
-        console.log(`El asiento seleccionado (fila ${fila}, columna ${columna}) ya está ocupado.`)
+        console.log(`Los valores indicados no son correctos.`);
     }
 }
 
 // Función de impresión en pantalla de la matriz de asientos.
 
-function imprimirAsientos(matriz) {
-  console.log("Mapa de Asientos del Cine:");
+function imprimirAsientos(matriz : Sala) {
+  console.log("Mapa de asientos del Cine:");
   let impFilas = "Col.    ";
-  for (let col = 0; col <asientosPorFila; col++) {
+  for (let col = 0; col < asientosPorFila; col++) {
     impFilas = impFilas.concat(`${col+1}`+"   ");
   }
   console.log(impFilas);
@@ -40,10 +47,10 @@ function imprimirAsientos(matriz) {
 
 // Función de conversión de la matriz de datos al formato de visualización (L = libre, X = ocupado).
 
-function visualizarSala(matriz) {
-    const verSala = [];
+function visualizarSala(matriz : Sala) {
+    const verSala : Sala = [];
     for (let ele = 0; ele < matriz.length ; ele++) {
-        const filaTemp=[];
+        const filaTemp : Asiento[]= [];
         for (let asiento = 0; asiento < matriz[ele].length; asiento++){
             if (matriz[ele][asiento] === 0){
                 filaTemp.push("L");
@@ -58,11 +65,10 @@ function visualizarSala(matriz) {
 
 // Función de cálculo de asientos vacíos y asientos ocupados.
 
-function estadoSala(matriz) {
+function estadoSala(matriz : Sala) {
     let suma_libres = 0;
     let suma_ocupados = 0;
     for (let fila in matriz) {
-        let suma_temp = 0;
         for (let caso = 0; caso < matriz[fila].length; caso++){
             if (matriz[fila][caso] === 0){
                 suma_libres++;
@@ -77,7 +83,7 @@ function estadoSala(matriz) {
 
 // Función de búsqueda de dupla de asientos vacíos.
 
-function buscarDupla (matriz) {
+function buscarDupla (matriz : Sala) {
     for (let fila in matriz) {
         for (let i = 0; i < matriz[fila].length; i++){
             if (matriz[fila][i] === 0 && matriz[fila][i+1] === 0){
@@ -92,6 +98,6 @@ function buscarDupla (matriz) {
 
 // Visualización de resultados de funciones. 
 
-imprimirAsientos(visualizarSala(asientosCine));
-estadoSala(asientosCine);
-buscarDupla(asientosCine);
+imprimirAsientos(visualizarSala(salaCine));
+estadoSala(salaCine);
+buscarDupla(salaCine);
